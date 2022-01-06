@@ -129,26 +129,39 @@ jobs:
           # EOF
           # 常用LuCI插件选择:
           cat >> .config <<EOF
+          # 广告屏蔽大师plus
           CONFIG_PACKAGE_luci-app-adbyby-plus=y
+          # aria2下载
           # CONFIG_PACKAGE_luci-app-aria2=y
+          # 百度云下载器
           # CONFIG_PACKAGE_luci-app-baidupcs-web=y
+          # docker ce
           CONFIG_PACKAGE_luci-app-docker=y
+          # 内网穿透
           # CONFIG_PACKAGE_luci-app-frpc=y
+          # 文件浏览器
           # CONFIG_PACKAGE_luci-app-kodexplorer=y
+          # 流媒体播放器
           # CONFIG_PACKAGE_luci-app-minidlna=y
+          # openvpn
           # CONFIG_PACKAGE_luci-app-openvpn=y
           # CONFIG_PACKAGE_luci-app-openvpn-server=y
+          # 磁力下载器
           # CONFIG_PACKAGE_luci-app-qbittorrent=y
           CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Kcptun=y
           CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Shadowsocks=y
           CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_ShadowsocksR_Server=y
           CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_ShadowsocksR_Socks=y
           CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_V2ray=y
+          # ttyd终端
           CONFIG_PACKAGE_luci-app-ttyd=y
           CONFIG_PACKAGE_luci-app-v2ray-server=y
+          # 微力同步
           # CONFIG_PACKAGE_luci-app-verysync=y
           CONFIG_PACKAGE_luci-app-webadmin=y
+          # 网络全互联？？
           # CONFIG_PACKAGE_luci-app-wireguard=y
+          # 实时流量监控
           # CONFIG_PACKAGE_luci-app-wrtbwmon=y
           EOF
           # LuCI主题:
