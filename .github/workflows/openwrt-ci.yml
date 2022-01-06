@@ -7,7 +7,7 @@
 # <https://github.com/KFERMercer/OpenWrt-CI>
 #
 
-name: OpenWrt-CI
+name: LEDE_CI
 
 on:
   push:
@@ -22,7 +22,7 @@ jobs:
 
   build_openwrt:
 
-    name: Build OpenWrt firmware
+    name: 编译lede固件
 
     runs-on: ubuntu-latest
 
@@ -30,12 +30,12 @@ jobs:
 
     steps:
 
-      - name: Checkout
+      - name: 检出代码
         uses: actions/checkout@v2
         with:
           ref: master
 
-      - name: Space cleanup
+      - name: 清理空间
         env:
           DEBIAN_FRONTEND: noninteractive
         run: |
@@ -55,11 +55,11 @@ jobs:
           # ln -s /mnt/openwrt/feeds ./feeds
           # ln -s /mnt/openwrt/staging_dir ./staging_dir
           df -h
-      - name: Update feeds
+      - name: 更新feeds
         run: |
           ./scripts/feeds update -a
           ./scripts/feeds install -a
-      - name: Generate configuration file
+      - name: 生成配置文件
         run: |
           rm -f ./.config*
           touch ./.config
@@ -136,26 +136,26 @@ jobs:
           # CONFIG_PACKAGE_luci-app-frpc=y
           # CONFIG_PACKAGE_luci-app-kodexplorer=y
           # CONFIG_PACKAGE_luci-app-minidlna=y
-          CONFIG_PACKAGE_luci-app-openvpn=y
+          # CONFIG_PACKAGE_luci-app-openvpn=y
           # CONFIG_PACKAGE_luci-app-openvpn-server=y
           # CONFIG_PACKAGE_luci-app-qbittorrent=y
-          # CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Kcptun=y
+          CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Kcptun=y
           CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Shadowsocks=y
           CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_ShadowsocksR_Server=y
           CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_ShadowsocksR_Socks=y
           CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_V2ray=y
           CONFIG_PACKAGE_luci-app-ttyd=y
-          # CONFIG_PACKAGE_luci-app-v2ray-server=y
+          CONFIG_PACKAGE_luci-app-v2ray-server=y
           # CONFIG_PACKAGE_luci-app-verysync=y
           CONFIG_PACKAGE_luci-app-webadmin=y
           # CONFIG_PACKAGE_luci-app-wireguard=y
           # CONFIG_PACKAGE_luci-app-wrtbwmon=y
           EOF
           # LuCI主题:
-          cat >> .config <<EOF
-          CONFIG_PACKAGE_luci-theme-argon=y
-          CONFIG_PACKAGE_luci-theme-netgear=y
-          EOF
+          # cat >> .config <<EOF
+          # CONFIG_PACKAGE_luci-theme-argon=y
+          # CONFIG_PACKAGE_luci-theme-netgear=y
+          # EOF
           # 常用软件包:
           cat >> .config <<EOF
           CONFIG_PACKAGE_curl=y
@@ -176,12 +176,12 @@ jobs:
           # 
           sed -i 's/^[ \t]*//g' ./.config
           make defconfig
-      - name: Make download
+      - name: 下载编译插件
         run: |
           make download -j8 || make download -j1 V=s
           rm -rf $(find ./dl/ -size -1024c)
           df -h
-      - name: Compile firmware
+      - name: 编译固件
         run: |
           make -j$(nproc) || make -j1 V=s
           echo "======================="
@@ -191,34 +191,23 @@ jobs:
           echo "======================="
           du -h ./ --max-depth=1
           du -h /mnt/openwrt/ --max-depth=1 || true
-      - name: Prepare artifact
+      - name: 转移编译文件
         run: |
           mkdir -p ./artifact/firmware
-          mkdir -p ./artifact/package
-          mkdir -p ./artifact/buildinfo
+          # mkdir -p ./artifact/package
+          # mkdir -p ./artifact/buildinfo
           rm -rf $(find ./bin/targets/ -type d -name "packages")
           cp -rf $(find ./bin/targets/ -type f) ./artifact/firmware/
-          cp -rf $(find ./bin/packages/ -type f -name "*.ipk") ./artifact/package/
-          cp -rf $(find ./bin/targets/ -type f -name "*.buildinfo" -o -name "*.manifest") ./artifact/buildinfo/
-      - name: Deliver buildinfo
-        uses: actions/upload-artifact@v2
-        with:
-          name: OpenWrt_buildinfo
-          path: ./artifact/buildinfo/
+          # cp -rf $(find ./bin/packages/ -type f -name "*.ipk") ./artifact/package/
+          # cp -rf $(find ./bin/targets/ -type f -name "*.buildinfo" -o -name "*.manifest") ./artifact/buildinfo/
 
-      - name: Deliver package
-        uses: actions/upload-artifact@v2
-        with:
-          name: OpenWrt_package
-          path: ./artifact/package/
-
-      - name: Deliver firmware
+      - name: 打包固件
         uses: actions/upload-artifact@v2
         with:
           name: OpenWrt_firmware
           path: ./bin/targets/
 
-      - name: Upload release asset
+      - name: 上传版本
         if: github.event == 'release'
         uses: svenstaro/upload-release-action@v2
         with:
