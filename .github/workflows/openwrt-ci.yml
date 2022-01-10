@@ -50,6 +50,7 @@ jobs:
       - name: 增加ssp依赖
         run: |
           mkdir -p package/openwrt-packages
+          echo `pwd`
           mkdir -p tmp-package
           cd tmp-package
           git clone https://github.com/liuran001/openwrt-packages.git
