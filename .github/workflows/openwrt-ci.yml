@@ -47,6 +47,16 @@ jobs:
           sudo -E apt-get -y autoremove --purge
           sudo -E apt-get clean
           df -h
+      - name: 增加ssp依赖
+        run: |
+          mkdir -p package/openwrt-packages
+          mkdir -p tmp-package
+          cd tmp-package
+          git clone https://github.com/liuran001/openwrt-packages.git
+          # 增加ssr-plus依赖
+          mv luci-app-ssr-plus /package/openwrt-packages/luci-app-ssr-plus
+          # 增加 adguardhome 依赖
+          mv luci-app-adguardhome /package/openwrt-packages/luci-app-adguardhome
       - name: 更新feeds
         run: |
           ./scripts/feeds update -a
@@ -128,6 +138,7 @@ jobs:
           # docker ce
           CONFIG_PACKAGE_luci-app-docker=y
           CONFIG_PACKAGE_luci-app-ssr-plus=y
+          CONFIG_PACKAGE_luci-app-adguardhome=y
           # ttyd终端
           CONFIG_PACKAGE_luci-app-ttyd=y
           CONFIG_PACKAGE_luci-app-webadmin=y
