@@ -172,8 +172,7 @@ jobs:
           EOF
           # LuCI主题:
           cat >> .config <<EOF
-          CONFIG_PACKAGE_luci-theme-argon_new=y
-          CONFIG_PACKAGE_luci-theme-rosy=y
+          CONFIG_PACKAGE_luci-theme-argon
           EOF
           # 
           # ========================固件定制部分结束========================
