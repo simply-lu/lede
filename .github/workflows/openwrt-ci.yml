@@ -4489,7 +4489,7 @@ jobs:
           # CONFIG_PACKAGE_luci-app-siitwizard is not set
           # CONFIG_PACKAGE_luci-app-simple-adblock is not set
           CONFIG_PACKAGE_luci-app-smartdns=y
-          # CONFIG_PACKAGE_luci-app-softethervpn is not set
+          CONFIG_PACKAGE_luci-app-softethervpn=y
           # CONFIG_PACKAGE_luci-app-splash is not set
           # CONFIG_PACKAGE_luci-app-sqm is not set
           # CONFIG_PACKAGE_luci-app-squid is not set
@@ -4552,7 +4552,7 @@ jobs:
           #
           # 6. Libraries
           #
-          # CONFIG_PACKAGE_luci-lib-docker is not set
+          CONFIG_PACKAGE_luci-lib-docker=y
           # CONFIG_PACKAGE_luci-lib-dracula is not set
           # CONFIG_PACKAGE_luci-lib-httpclient is not set
           # CONFIG_PACKAGE_luci-lib-httpprotoutils is not set
