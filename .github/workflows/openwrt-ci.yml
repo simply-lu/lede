@@ -5467,7 +5467,7 @@ jobs:
           # CONFIG_PACKAGE_apcupsd is not set
           # CONFIG_PACKAGE_apcupsd-cgi is not set
           # CONFIG_PACKAGE_apinger is not set
-          CONFIG_PACKAGE_baidupcs-web=y
+          # CONFIG_PACKAGE_baidupcs-web is not set
           # CONFIG_BAIDUPCS_WEB_COMPRESS_GOPROXY is not set
           CONFIG_BAIDUPCS_WEB_COMPRESS_UPX=y
           # CONFIG_PACKAGE_banip is not set
